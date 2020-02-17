@@ -24,7 +24,7 @@ pipeline {
    stage('Git Clone') { 
    steps {
       // Get some code from a GitHub repository
-      git 'https://github.com/walidsaad/maven-jenkins-pipeline.git'
+     git 'https://github.com/Ben-shei/maven-jenkins-pipeline.git'
    }
    }     
    stage('Build Docker Maven Image') {
