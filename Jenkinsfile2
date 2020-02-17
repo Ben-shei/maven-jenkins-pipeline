@@ -32,10 +32,17 @@ pipeline {
    sh "docker build -t=\"${MAVEN_IMAGE_NAME}:${DOCKER_TAG}\" ./maven/"
    }
    }
-   stage('Generate Maven Artifact') {
+   stage('Build Docker Maven Image') {
    steps {
-   echo "Run Docker Container and Generate Artifcat"
-   sh "docker run --rm -d -v /home/stagiaire/.m2:/root/.m2 -w /app/training-webapp/ --name test-maven  ${MAVEN_IMAGE_NAME}:${DOCKER_TAG} mvn clean install"
+      // Run the maven docker build
+   echo "Build Docker Maven Image With Sample WebApp"
+   sh "docker build -t=\"${MAVEN_IMAGE_NAME}:${DOCKER_TAG}\" ./maven/"
+   }
+   }
+   stage('push docker hub') {
+   steps {
+   docker tag registry-host:localhost:8888/training-webapp-1.0-SNAPSHOT/
+   docker push registry-host:localhost:8888/training-webapp-1.0-SNAPSHOT/
    }
    }
     stage('Deploy Artifcat') {
